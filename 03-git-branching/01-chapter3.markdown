@@ -15,7 +15,7 @@
 	$ git add README test.rb LICENSE
 	$ git commit -m 'initial commit of my project'
 
-เมื่อคุณทำการ commit ด้วยคำสั่ง `git commit` Git จะคำนวน checksum ของแต่ละ subdirectory (ในกรณีนี้ก็มีแค่ root project directory) และบันทึกโครงสร้างของ directory ใน Git repository หลังจากนั้น Git ก็จะสร้าง commit object ที่มี metadata และ pointer ชี้ไปยังโครงสร้างของ root project เพื่อที่มันจะได้สร้าง snapshot นั้นขึ้นมาใหม่ได้เมื่อต้องการ
+เมื่อคุณทำการ commit ด้วยคำสั่ง `git commit` Git จะคำนวณ checksum ของแต่ละ subdirectory (ในกรณีนี้ก็มีแค่ root project directory) และบันทึกโครงสร้างของ directory ใน Git repository หลังจากนั้น Git ก็จะสร้าง commit object ที่มี metadata และ pointer ชี้ไปยังโครงสร้างของ root project เพื่อที่มันจะได้สร้าง snapshot นั้นขึ้นมาใหม่ได้เมื่อต้องการ
 
 Git repository ของคุณตอนนี้จะมี 5 objects: blob แต่ละ blob สำหรับ content ของแต่ละ file ใน 3 files นั้น, โครงสร้าง root directory ที่เก็บ list ของสิ่งของในนั้นและบันทึกว่า file ไหนถูกเก็บใส่ blob ไหน และ 1 commit ที่มี pointer อันนึงชี้ไปยังโครงสร้างของ root directory กับพวก metadata ของ commit นั้น ซึ่งหน้าตาของข้อมูลใน Git repository ของคุณก็มีคอนเซปประมาณรูป Figure 3-1.
 
@@ -361,7 +361,7 @@ Figure 3-19. It may be helpful to think of your branches as silos.
 
 ### Topic Branches ###
 
-ส่วน topic branches เป็นคนละเรื่องนะจ๊ะ เพราะมันมีประโยชน์กับ projects ทุก size topic branch นั้นคือ branch ที่มีอายุสั้นๆ short-lived ที่คุณสร้างและใช้สำหรับ feature ใดๆซักอัน branche แบบนี้เป็นอะไรที่คุณน่าจะไม่เคยทำมาก่อนกับ VCS อื่นๆเพราะโดยปรกติแล้วการ create และ merge branches มันเปลืองพลังงานมาก แต่ใน Git การ create branch, switch branch ทำงาน, merge branch และ delete branches เป็นเรื่องธรรมดาที่ทำกันได้ทุกวัน (อวดอีกแล้ว :P)
+ส่วน topic branches เป็นคนละเรื่องนะจ๊ะ เพราะมันมีประโยชน์กับ projects ทุก size topic branch นั้นคือ branch ที่มีอายุสั้นๆ short-lived ที่คุณสร้างและใช้สำหรับ feature ใดๆซักอัน branches แบบนี้เป็นอะไรที่คุณน่าจะไม่เคยทำมาก่อนกับ VCS อื่นๆเพราะโดยปรกติแล้วการ create และ merge branches มันเปลืองพลังงานมาก แต่ใน Git การ create branch, switch branch ทำงาน, merge branch และ delete branches เป็นเรื่องธรรมดาที่ทำกันได้ทุกวัน (อวดอีกแล้ว :P)
 
 อย่างที่คุณเห็นตัวอย่างไปแล้วใน branch `iss53` และ `hotfix` ที่คุณ create ขึ้นมา, commit ลงไปและก็ได้ delete พวกมันทันทีหลังจาก merge พวกมันเข้า branch หลัก เทคนิคแบบนี้จะทำให้คุณ context-switch ได้อย่างเฉียบขาดและรวดเร็วส์ (เพราะงานที่คุณทำถูกแยกออกมาอยู่ในยุ้งของตัวเองโดยที่ความเปลี่ยนแปลงทั้งหมดที่คุณสร้างมันเกี่ยวข้องกับ topic นั้นๆโดยตรง) การจะติดตามว่าอะไรเปลี่ยนไปยังไงก็ง่ายไม่ว่าจะเป็นตอนทำ code review หรืออะไรต่างๆ คุณจะเก็บความเปลี่ยนแปลงที่เกิดขึ้นไว้ใน branch นั้นเป็นหลายนาที, หลายวัน หรือหลายเดือนก็ตามใจ แล้วค่อย merge มันเข้ามาเมื่อมันเสร็จโดยที่ไม่เกี่ยวว่ามันจะถูกสร้างหรือทำเมื่อไหร่
 
@@ -422,7 +422,7 @@ Figure 3-26. You get a reference to teamone’s master branch position locally.
 	To git@github.com:schacon/simplegit.git
 	 * [new branch]      serverfix -> serverfix
 
-อันนี้เป็น shortcut นิดส์ๆ โดย Git จะขยายชื่อ branch `serverfix` ออกเป็น `refs/heads/serverfix:refs/heads/serverfix` โดยอัตโนมัติ ซึ่งแปลว่า “เอา serverfix ที่เป็น local branch คนเครื่องฉันไป push ใส่ serverfix บน remote ให้ที” เด๋วเราค่อยมาว่ากันในรายละเอียดของส่วน `refs/heads/` ใน Chapter 9 ตอนนี้ทำเป็นลืมๆมันไปก่อน แน่นอนว่าคุณสามารถทำ `git push origin serverfix:serverfix` ก็ได้ เพราะมันจะได้ผลออกมาเหมือนกัน (เพราะมันแปลว่า “เอา serverfix ของฉันไปทำเป็น serverfix ของ remote ซะ”) คุณสามารถใช้ format เพื่อ push local branch ซักอันไปยัง remote branch ซึ่งมีชื่อต่างกันได้ ถ้าคุณไม่อยากให้มันมีชื่อว่า `serverfix` บน remote คุณก้ run `git push origin serverfix:awesomebranch` แทนเพื่อที่จะ push `serverfix` branch บนเครื่องไปเป็น `awesomebranch` branch บน remote project
+อันนี้เป็น shortcut นิดส์ๆ โดย Git จะขยายชื่อ branch `serverfix` ออกเป็น `refs/heads/serverfix:refs/heads/serverfix` โดยอัตโนมัติ ซึ่งแปลว่า “เอา serverfix ที่เป็น local branch ของเครื่องฉันไป push ใส่ serverfix บน remote ให้ที” เด๋วเราค่อยมาว่ากันในรายละเอียดของส่วน `refs/heads/` ใน Chapter 9 ตอนนี้ทำเป็นลืมๆมันไปก่อน แน่นอนว่าคุณสามารถทำ `git push origin serverfix:serverfix` ก็ได้ เพราะมันจะได้ผลออกมาเหมือนกัน (เพราะมันแปลว่า “เอา serverfix ของฉันไปทำเป็น serverfix ของ remote ซะ”) คุณสามารถใช้ format เพื่อ push local branch ซักอันไปยัง remote branch ซึ่งมีชื่อต่างกันได้ ถ้าคุณไม่อยากให้มันมีชื่อว่า `serverfix` บน remote คุณก็ run `git push origin serverfix:awesomebranch` แทนเพื่อที่จะ push `serverfix` branch บนเครื่องไปเป็น `awesomebranch` branch บน remote project
 
 ครั้งต่อไปที่เพื่อนคุณซักคน fetch ของจาก server เค้าจะได้ reference อันนึงที่ชี้ไปยัง `serverfix` version บน server ในรูปแบบ remote branch ชื่อ `origin/serverfix`:
 
@@ -464,7 +464,7 @@ Figure 3-26. You get a reference to teamone’s master branch position locally.
 
 ### การลบ Remote Branches ###
 
-สมมติว่าคุณจะทิ้ง remote branch ยกตัวอย่างเช่น คุณและเพื่อนๆทำ feature อันนึงเสร็จและได้ merged มันเข้าไปยัง remote `master` branch (หรือ branch ลิงอะไรก็ช่างที่เอาไว้เก็บ code ที่ stable อ่ะ) คุณสามารถ delete remote branch ได้อย่างงงๆด้วยคำสั่ง `git push [remotename] :[branch]` สมมติว่าอยากจะลบ `serverfix` branch จาก server ก็ run คำสั่งดังนี้:
+สมมติว่าคุณจะทิ้ง remote branch ยกตัวอย่างเช่น คุณและเพื่อนๆทำ feature อันนึงเสร็จและได้ merged มันเข้าไปยัง remote `master` branch (หรือ branch ลิงค์อะไรก็ช่างที่เอาไว้เก็บ code ที่ stable อ่ะ) คุณสามารถ delete remote branch ได้อย่างงงๆด้วยคำสั่ง `git push [remotename] :[branch]` สมมติว่าอยากจะลบ `serverfix` branch จาก server ก็ run คำสั่งดังนี้:
 
 	$ git push origin :serverfix
 	To git@github.com:schacon/simplegit.git
